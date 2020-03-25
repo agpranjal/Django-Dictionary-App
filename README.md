@@ -1,5 +1,5 @@
 # Django-Dictionary
-A dictionary application written in django. Data is extracted from Oxford dictionary api
+A dictionary application written in django. Data is extracted from developer.oxforddictionaries.com (using API)
 
 ### Requirements:
 + python3
