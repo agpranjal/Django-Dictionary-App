@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <title>Oxford dictionary</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light bg-dark">
+        <a class="navbar-brand text-light col-7" href="#">Oxford Dictionary</a>
+        <ul class="navbar-nav">
+            <li class="nav-item text-muted mr-4">( Powered by developer.oxforddictionaries.com )</li>
+        </ul>
+
+    </nav>
+
+    {%if error%}
+    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+        <strong>Word not found</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+    <div class="container mt-3 col-12">
+
+        <form class="form-inline mt-3" autocomplete="off" action="/" method="POST"> {%csrf_token%}
+            <div class="row mx-auto">
+                <div class="form-group">
+                    <input type="text" class="shadow-lg form-control" id="exampleInputEmail1" placeholder="Enter a word"
+                        aria-describedby="emailHelp" name="word" required>
+                </div>
+
+                <button type="submit" class="btn btn-dark shadow-lg ml-3">Search</button>
+            </div>
+        </form>
+
+        {%else%}
+
+        <div class="container mt-3 col-12">
+
+            <form class="form-inline mt-3" autocomplete="off" action="/" method="POST"> {%csrf_token%}
+                <div class="row mx-auto">
+                    <div class="form-group">
+                        <input type="text" class="shadow-lg form-control" id="exampleInputEmail1" placeholder="Enter a word"
+                            aria-describedby="emailHelp" name="word" required>
+                    </div>
+    
+                    <button type="submit" class="btn btn-dark shadow-lg ml-3">Search</button>
+                </div>
+            </form>
+
+
+        {%if response%}
+        <div class="container mt-4">
+
+            <div class="card mx-auto rounded shadow-lg" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{response.word|capfirst}}</h5>
+                    <p class="card-text text-muted">{{response.definitions.0}}</p>
+
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
+                        Usage
+                    </button>
+
+        {%endif%}
+                </div>
+            </div>
+        </div>
+        {%endif%}
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Usage of "{{response.word}}":</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{response.examples.0.text}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
